@@ -484,6 +484,9 @@ static int qti_haptics_module_en(struct qti_hap_chip *chip, bool en)
 	return rc;
 }
 
+static int vmax_mv_override = 0;
+module_param_named(vmax_mv_override, vmax_mv_override, int, 0664);
+
 static int qti_haptics_config_vmax(struct qti_hap_chip *chip, int vmax_mv)
 {
 	u8 addr, mask, val;
@@ -491,16 +494,12 @@ static int qti_haptics_config_vmax(struct qti_hap_chip *chip, int vmax_mv)
 
 	addr = REG_HAP_VMAX_CFG;
 	mask = HAP_VMAX_MV_MASK;
-
-	/*
-	 * apply vmax_mv_user within specified range
-	 * will revert back to default on zero value
-	 */
-	if (vmax_mv_user > 0 && vmax_mv_user < HAP_VMAX_MV_MAX) {
-		val = (vmax_mv_user / HAP_VMAX_MV_LSB) << HAP_VMAX_MV_SHIFT;
-	} else {
-		val = (vmax_mv / HAP_VMAX_MV_LSB) << HAP_VMAX_MV_SHIFT;
+	if(vmax_mv_override) {
+		if(vmax_mv_override > HAP_VMAX_MV_MAX)
+			vmax_mv_override = HAP_VMAX_MV_MAX;
+		vmax_mv = vmax_mv_override;
 	}
+	val = (vmax_mv / HAP_VMAX_MV_LSB) << HAP_VMAX_MV_SHIFT;
 	rc = qti_haptics_masked_write(chip, addr, mask, val);
 	if (rc < 0)
 		dev_err(chip->dev, "write VMAX_CFG failed, rc=%d\n",
