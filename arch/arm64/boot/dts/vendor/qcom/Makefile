@@ -10,7 +10,6 @@ dtb-$(CONFIG_ARCH_BENGAL) += \
 		bengal-idp.dtb
 
 endif
-
 ifeq ($(CONFIG_BUILD_ARM64_DT_OVERLAY),y)
         dtbo-$(CONFIG_ARCH_KONA) += \
                 kona-cdp-overlay.dtbo \
