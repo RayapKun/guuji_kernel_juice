@@ -494,21 +494,18 @@ const struct xattr_handler erofs_xattr_user_handler = {
 	.prefix	= XATTR_USER_PREFIX,
 	.flags	= EROFS_XATTR_INDEX_USER,
 	.list	= erofs_xattr_user_list,
-	.get	= erofs_xattr_generic_get,
 };
 
 const struct xattr_handler erofs_xattr_trusted_handler = {
 	.prefix	= XATTR_TRUSTED_PREFIX,
 	.flags	= EROFS_XATTR_INDEX_TRUSTED,
 	.list	= erofs_xattr_trusted_list,
-	.get	= erofs_xattr_generic_get,
 };
 
 #ifdef CONFIG_EROFS_FS_SECURITY
 const struct xattr_handler __maybe_unused erofs_xattr_security_handler = {
 	.prefix	= XATTR_SECURITY_PREFIX,
 	.flags	= EROFS_XATTR_INDEX_SECURITY,
-	.get	= erofs_xattr_generic_get,
 };
 #endif
 
