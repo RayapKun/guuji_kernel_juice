@@ -1,0 +1,5 @@
+<h2 align="center">Deprecated</h2>
+
+```
+Moved To https://github.com/frstprjkt/guuji_kernel_juice
+```
